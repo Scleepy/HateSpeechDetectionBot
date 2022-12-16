@@ -13,29 +13,34 @@ def update_database(serverID, userID):
             warnings = database[serverID][userID]['warnings']
             total_kicked = database[serverID][userID]['totalkicked']
 
-            if(total_kicked == 3): #user banned, set to initial value
+            if(total_kicked == 3):
                 flag = 1 #flag to ban
-                warnings = 0
-                total_kicked = 0
+                database[serverID][userID] = {
+                    'warnings': 0,
+                    'totalkicked': 0
+                }
 
-            elif(warnings == 3): #user kicked, set warnings to 0 and increment kicked counter
+            elif(warnings == 3):
                 flag = 2 #flag to kick
-                warnings = 0
-                total_kicked = total_kicked + 1
+                database[serverID][userID] = {
+                    'warnings': 0,
+                    'totalkicked': total_kicked + 1
+                }
 
-            else: #user warned, increment kicked counter
-                warnings = warnings + 1
-    
-        else: #create new user, set warnings to 1
-            warnings = 1
-            total_kicked = 0
-        
-        database[serverID][userID] = {
-            'warnings': warnings, 
-            'totalkicked': total_kicked
+            else:
+
+                database[serverID][userID] = {
+                    'warnings': warnings + 1,
+                    'totalkicked': total_kicked
+                }
+
+        else:
+            database[serverID][userID] = {
+                'warnings': 1, 
+                'totalkicked': 0
         }
-
-    else: 
+        
+    else:
         database[serverID] = {
             userID: {
                 'warnings': 1,

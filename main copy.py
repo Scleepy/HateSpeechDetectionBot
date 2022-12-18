@@ -23,16 +23,13 @@ async def on_message(message):
 
     if(text == 'Hate Speech Detected'):
         response = database_function.update_database(str(message.guild.id), str(message.author.id))
-
-        # guild = client.get_guild(message.guild.id)
-        # member = guild.get_member(message.author.id)
     
         if(response == 1): 
             #ban user
-            await message.channel.send("User kicked");
+            await message.channel.send("User banned");
         elif(response == 2):
             #kick user
-            await message.channel.send("User banned");
+            await message.channel.send("User kicked");
 
 
         print("========================================")

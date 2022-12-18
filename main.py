@@ -28,11 +28,14 @@ async def on_message(message):
         # member = guild.get_member(message.author.id)
     
         if(response == 1): 
-            #ban user
-            await message.channel.send("User kicked");
+            async def ban(ctx, member:discord.Member, *, reason=None):
+                await member.ban(reason=reason)
+                await message.channel.send("User banned");
+                
         elif(response == 2):
-            #kick user
-            await message.channel.send("User banned");
+            async def kick(ctx, member:discord.Member, *, reason=None):
+                await member.kick(reason=reason)
+                await message.channel.send("User kicked");
 
 
         print("========================================")

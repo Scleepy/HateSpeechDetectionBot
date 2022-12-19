@@ -7,6 +7,7 @@ from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 client = discord.Client(intents=intents)
 
@@ -24,22 +25,36 @@ async def on_message(message):
     if(text == 'Hate Speech Detected'):
         response = database_function.update_database(str(message.guild.id), str(message.author.id))
 
-        # guild = client.get_guild(message.guild.id)
-        # member = guild.get_member(message.author.id)
-    
+        guild = client.get_guild(message.guild.id)
+        member = guild.get_member(message.author.id)
+
+        total_warnings = database_function.get_total_warnings(str(message.guild.id), str(message.author.id))
+        total_kicked = database_function.get_total_kicked(str(message.guild.id), str(message.author.id))
+
         if(response == 1): 
-            #ban user
-            await message.channel.send("User kicked");
+            await message.channel.send(f'{member.mention} banned!')
+            try:
+                await member.ban(reason='User exceeded warning limit')
+            except:
+                print('User has higher privileges')
+
         elif(response == 2):
-            #kick user
-            await message.channel.send("User banned");
+            await message.channel.send(f'{member.mention} kicked!')
+            try:
+                await member.kick(reason='User exceeded warning limit')
+            except:
+                print('User has higher privileges')
+        
+        else:
+            await message.channel.send(f'{member.mention} Watch your words!')
+            await message.channel.send(f'You have been warned {total_warnings} times and kicked {total_kicked} times!')
+            await message.channel.send(f'You have {3 - total_warnings} warnings left!')
 
-
-        print("========================================")
-        print("Response: " + str(response))
-        print("Total Warnings: " + str(database_function.get_total_warnings(str(message.guild.id), str(message.author.id))))
-        print("Total Kicked: " + str(database_function.get_total_kicked(str(message.guild.id), str(message.author.id))))
+        print('========================================')
+        print(f'Member: {member.name}')
+        print(f'Response: {str(response)}')
+        print(f'Total Warnings: {str(total_warnings)}')
+        print(f'Total Kicked: {str(total_kicked)}')
 
 load_dotenv()
 client.run(os.getenv('TOKEN'))
-

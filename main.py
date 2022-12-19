@@ -1,7 +1,7 @@
 import discord
 import os
 from dotenv import load_dotenv
-import AI.ai_chatbot as brain
+import AI.LSTM_Model as brain
 import Functions.database_functions as database_function
 from discord.ext import commands
 
@@ -19,10 +19,10 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    
+    probability = brain.predict_word(message.content)
 
-    text = brain.predict_word(message.content)
-
-    if(text == 'Hate Speech Detected'):
+    if(probability > 0.95):
         response = database_function.update_database(str(message.guild.id), str(message.author.id))
 
         guild = client.get_guild(message.guild.id)

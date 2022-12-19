@@ -40,4 +40,4 @@ clf.fit(X_train, y_train)
 
 def predict_word(test_data):
     df = cv.transform([test_data]).toarray()
-    return clf.predict(df)[0]
+    return clf.predict(df)[0][0]

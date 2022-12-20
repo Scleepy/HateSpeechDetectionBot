@@ -19,8 +19,12 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+
+    # guild = client.get_guild(message.guild.id)
+    # member = guild.get_member(message.author.id)
     
     probability = brain.predict_word(message.content)
+    #await message.channel.send(f'{member.mention}: probability is {probability * 100}%')
 
     if(probability > 0.95):
         response = database_function.update_database(str(message.guild.id), str(message.author.id))

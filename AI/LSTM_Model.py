@@ -4,7 +4,7 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
-from tensorflow.keras.layers import Dense, Input, GlobalMaxPooling1D
+from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.layers import LSTM, Embedding
 from tensorflow.keras.models import Model
 

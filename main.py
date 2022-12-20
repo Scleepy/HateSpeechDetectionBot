@@ -53,6 +53,7 @@ async def on_message(message):
             await message.channel.send(f'{member.mention} Watch your words!')
             await message.channel.send(f'You have been warned {total_warnings} times and kicked {total_kicked} times!')
             await message.channel.send(f'You have {3 - total_warnings} warnings left!')
+            await message.delete()
 
         print('========================================')
         print(f'Member: {member.name}')

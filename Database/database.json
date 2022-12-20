@@ -24,21 +24,25 @@
         },
         "675940459943821322": {
             "warnings": 0,
-            "totalkicked": 3
+            "totalkicked": 0
         }
     },
     "1030032605820768306": {
         "238642251025088512": {
-            "warnings": 1,
+            "warnings": 2,
             "totalkicked": 2
         },
         "547405543397130243": {
-            "warnings": 2,
+            "warnings": 3,
             "totalkicked": 1
         },
         "429777838833532928": {
-            "warnings": 1,
+            "warnings": 2,
             "totalkicked": 1
+        },
+        "402001575457062913": {
+            "warnings": 1,
+            "totalkicked": 0
         }
     }
 }

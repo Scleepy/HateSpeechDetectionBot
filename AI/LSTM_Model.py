@@ -11,44 +11,51 @@ from imblearn.over_sampling import RandomOverSampler
 
 dataset = pd.read_csv('./AI/dataset_new.csv')
 dataset.dropna(inplace = True)
-
 dataset.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis = 1, inplace = True)
 
+#OVERSAMPLING
 dataset_normal = dataset.loc[dataset['class'] == 0]
 dataset_hate = dataset.loc[dataset['class'] == 1]
 
 oversample = dataset_hate.sample(len(dataset_normal.index), replace=True)
 new_dataset = pd.concat([dataset_normal, oversample], axis=0)
 
+#SPLITTING DATASET
 x = new_dataset['tweet'].to_numpy()
 y = new_dataset['class'].to_numpy()
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=42)
 
+#TOKENIZATION
 vectorizer = TextVectorization(
     max_tokens = None, 
     standardize = 'lower_and_strip_punctuation', 
     split = 'whitespace', 
     ngrams = None, 
     output_mode = 'int', 
-    output_sequence_length = None)
+    output_sequence_length = None,
+    pad_to_max_tokens = True)
 
 MAX_VOCAB = 1500
-MAX_LENGTH = 15
+MAX_LENGTH = 13 #average words per sentence
 
 vectorizer = TextVectorization(max_tokens = MAX_VOCAB, output_mode = 'int', output_sequence_length=MAX_LENGTH)
 vectorizer.adapt(x_train)
 
+#EMBEDDING
 tf.random.set_seed(42)
-embedding = Embedding(embeddings_initializer = 'uniform', output_dim = 128, input_dim = MAX_VOCAB, input_length = MAX_LENGTH, name='embedding')
+embedding = Embedding(embeddings_initializer = 'uniform', input_dim = MAX_VOCAB, output_dim = 128, input_length = MAX_LENGTH)
 
-input = Input(shape=(1,), dtype="string")
+#LAYERS
+input = Input(shape=(1,), dtype='string')
 x = vectorizer(input)
 x = embedding(x)
+x = LSTM(128, return_sequences = True)(x)
 x = LSTM(64)(x)
+x = Dense(64, activation='relu')(x)
 
-output = Dense(1, activation="sigmoid")(x)
-model = tf.keras.Model(input, output, name="LSTM")
+output = Dense(1, activation='sigmoid')(x)
+model = tf.keras.Model(input, output, name='LSTM')
 
 model.compile(
     loss='binary_crossentropy',

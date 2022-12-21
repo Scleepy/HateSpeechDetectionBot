@@ -1,7 +1,7 @@
 {
     "617713956265525278": {
         "402001575457062913": {
-            "warnings": 0,
+            "warnings": 1,
             "totalkicked": 0
         },
         "756326365565026326": {
@@ -12,7 +12,7 @@
     "740931302793936946": {
         "402001575457062913": {
             "warnings": 0,
-            "totalkicked": 3
+            "totalkicked": 0
         },
         "332004518650839041": {
             "warnings": 2,
@@ -23,25 +23,25 @@
             "totalkicked": 3
         },
         "675940459943821322": {
-            "warnings": 0,
-            "totalkicked": 0
+            "warnings": 2,
+            "totalkicked": 1
         }
     },
     "1030032605820768306": {
         "238642251025088512": {
-            "warnings": 2,
-            "totalkicked": 2
+            "warnings": 0,
+            "totalkicked": 0
         },
         "547405543397130243": {
-            "warnings": 3,
-            "totalkicked": 1
+            "warnings": 0,
+            "totalkicked": 0
         },
         "429777838833532928": {
-            "warnings": 2,
-            "totalkicked": 1
+            "warnings": 0,
+            "totalkicked": 0
         },
         "402001575457062913": {
-            "warnings": 1,
+            "warnings": 0,
             "totalkicked": 0
         }
     }

@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 import AI.LSTM_Model as brain
 import Functions.database_functions as database_function
-from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -26,6 +25,11 @@ async def on_message(message):
     probability = brain.predict_word(message.content)
     #await message.channel.send(f'{member.mention}: probability is {probability * 100}%')
 
+    print('========================================')
+    print(f'User: {message.author.name}')
+    print(f'Sentence: {message.content}')
+    print(f'Hate Speech Probability: {probability * 100}%')
+
     if(probability > 0.95):
         response = database_function.update_database(str(message.guild.id), str(message.author.id))
 
@@ -38,6 +42,7 @@ async def on_message(message):
         if(response == 1): 
             await message.channel.send(f'{member.mention} banned!')
             try:
+                await message.delete()
                 await member.ban(reason='User exceeded warning limit')
             except:
                 print('User has higher privileges')
@@ -45,6 +50,7 @@ async def on_message(message):
         elif(response == 2):
             await message.channel.send(f'{member.mention} kicked!')
             try:
+                await message.delete()
                 await member.kick(reason='User exceeded warning limit')
             except:
                 print('User has higher privileges')
@@ -55,8 +61,6 @@ async def on_message(message):
             await message.channel.send(f'You have {3 - total_warnings} warnings left!')
             await message.delete()
 
-        print('========================================')
-        print(f'Member: {member.name}')
         print(f'Response: {str(response)}')
         print(f'Total Warnings: {str(total_warnings)}')
         print(f'Total Kicked: {str(total_kicked)}')

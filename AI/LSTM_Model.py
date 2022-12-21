@@ -4,15 +4,24 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
-from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.layers import LSTM, Embedding
+from tensorflow.keras.layers import Dense, Input, LSTM, Embedding
 from tensorflow.keras.models import Model
+
+from imblearn.over_sampling import RandomOverSampler
 
 dataset = pd.read_csv('./AI/dataset_new.csv')
 dataset.dropna(inplace = True)
 
-x = dataset['tweet'].to_numpy()
-y = dataset['class'].to_numpy()
+dataset.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis = 1, inplace = True)
+
+dataset_normal = dataset.loc[dataset['class'] == 0]
+dataset_hate = dataset.loc[dataset['class'] == 1]
+
+oversample = dataset_hate.sample(len(dataset_normal.index), replace=True)
+new_dataset = pd.concat([dataset_normal, oversample], axis=0)
+
+x = new_dataset['tweet'].to_numpy()
+y = new_dataset['class'].to_numpy()
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
 
@@ -36,7 +45,7 @@ embedding = Embedding(embeddings_initializer = 'uniform', output_dim = 128, inpu
 input = Input(shape=(1,), dtype="string")
 x = vectorizer(input)
 x = embedding(x)
-x = LSTM(100)(x)
+x = LSTM(64)(x)
 
 output = Dense(1, activation="sigmoid")(x)
 model = tf.keras.Model(input, output, name="LSTM")

@@ -19,11 +19,11 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # guild = client.get_guild(message.guild.id)
-    # member = guild.get_member(message.author.id)
+    guild = client.get_guild(message.guild.id)
+    member = guild.get_member(message.author.id)
     
     probability = brain.predict_word(message.content)
-    #await message.channel.send(f'{member.mention}: probability is {probability * 100}%')
+    await message.channel.send(f'{member.mention}: probability is {probability * 100}%')
 
     print('========================================')
     print(f'User: {message.author.name}')

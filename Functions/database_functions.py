@@ -16,7 +16,7 @@ def update_database(serverID, userID):
             if(total_kicked == 3): #user banned, set to initial value
                 flag = 1 #flag to ban
                 warnings = 0
-                total_kicked = 0
+                total_kicked = 2
 
             elif(warnings == 3): #user kicked, set warnings to 0 and increment kicked counter
                 flag = 2 #flag to kick

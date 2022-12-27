@@ -33,8 +33,7 @@ vectorizer = TextVectorization(
     split = 'whitespace', 
     ngrams = None, 
     output_mode = 'int', 
-    output_sequence_length = None,
-    pad_to_max_tokens = True)
+    output_sequence_length = None)
 
 MAX_VOCAB = 1500
 MAX_LENGTH = 13 #average words per sentence

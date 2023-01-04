@@ -1,4 +1,4 @@
-#Project AI Kelompok 3 - Hate Speech Detection Using Discord Bot
+# Project AI Kelompok 3 - Hate Speech Detection Using Discord Bot
 
 2501973110 - Rangga Gunawan
 
@@ -11,6 +11,7 @@
 2501973142 - Kenneth Filbert
 
 
+### Libraries Used:
 
 pip install discord
 
@@ -32,3 +33,5 @@ https://discordpy.readthedocs.io/en/stable/
 https://www.kaggle.com/code/residentmario/undersampling-and-oversampling-imbalanced-data
 
 https://www.kaggle.com/datasets/mrmorj/hate-speech-and-offensive-language-dataset
+
+#### Note: Python 3.9.13 was used for this project

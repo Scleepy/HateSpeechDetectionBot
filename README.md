@@ -1,4 +1,16 @@
-# HateSpeechDetectionBot
+#Project AI Kelompok 3 - Hate Speech Detection Using Discord Bot
+
+2501973110 - Rangga Gunawan
+
+2501975261 - Daniel Yohanes
+
+2501974385 - Ricky Krisdianto
+
+2501971351 - Jessen Surya Putra
+
+2501973142 - Kenneth Filbert
+
+
 
 pip install discord
 
